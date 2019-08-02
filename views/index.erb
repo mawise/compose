@@ -1,0 +1,30 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/light.min.css">
+</head>
+<body onload="doRender()">
+<h1>Testing</h1>
+<hr>
+<form method="post" enctype="multipart/form-data">
+  <textarea name="content" id="inputcontent" rows=10 oninput="doRender();">
+<%=@content%></textarea>
+  <input type="file" name="pic" accept="image/*">
+  <input type="submit" value="Upload Image">
+</form>
+
+<hr>
+
+<div id="display">
+</div>
+
+<script src="js/showdown.min.js"></script>
+<script type="text/javascript">
+function doRender() {
+  var converter = new showdown.Converter();
+  var text      = document.getElementById("inputcontent").value;
+  var html      = converter.makeHtml(text);
+  document.getElementById("display").innerHTML = html;
+}
+</script>
+</body>
+</html>
