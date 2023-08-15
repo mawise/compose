@@ -23,6 +23,7 @@ post '/' do
   if params.has_key?("pic")
     @filename = sanitize params[:pic][:filename]
     file = params[:pic][:tempfile]
+    Dir.mkdir("./public/img") unless File.exists?("./public/img")
     File.open("./public/img/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
