@@ -6,10 +6,13 @@
 <h1>Testing</h1>
 <hr>
 <form method="post" enctype="multipart/form-data">
+  <input type="date" name="date" value="<%=@datenow%>" style="display:inline"/>
+  <input type="time" name="time" value="<%=@timenow%>" style="display:inline"/>
   <textarea name="content" id="inputcontent" rows=10 oninput="doRender();">
 <%=@content%></textarea>
-  <input type="file" name="pic" accept="image/*">
-  <input type="submit" value="Upload Image">
+  <input type="file" name="pic" accept="image/*" style="display:inline"/>
+  <input type="submit" value="Upload Selected Image" style="display:inline"/>
+  <input type="submit" value="Save Post"/>
 </form>
 
 <hr>

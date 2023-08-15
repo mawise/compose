@@ -1,25 +1,34 @@
 require 'sinatra'
+require 'sqlite3'
+require 'date'
 
 def sanitize(filename)
-  # Remove any character that aren't 0-9, A-Z, or a-z, or '.'
+  # Remove any characters that aren't 0-9, A-Z, or a-z, or '.'
   filename.gsub(/[^0-9A-Z.]/i, '_')
 end
 
 get '/' do
   @content = ""
+  now = DateTime.now
+  @datenow = now.strftime("%Y-%m-%d")
+  @timenow = now.strftime("%H:%M")
   erb :index
 end
 
 post '/' do
-##  STDERR.puts params.to_s
+  STDERR.puts params.to_s
   @content = params[:content]
-  @filename = sanitize params[:pic][:filename]
-  file = params[:pic][:tempfile]
-  File.open("./public/img/#{@filename}", 'wb') do |f|
-    f.write(file.read)
+  @datenow = params[:date]
+  @timenow = params[:time]
+  if params.has_key?("pic")
+    @filename = sanitize params[:pic][:filename]
+    file = params[:pic][:tempfile]
+    File.open("./public/img/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    new_text = "![](/img/#{@filename} \"#{@filename}\")"
+    @content = "#{@content}\n\n#{new_text}"
   end
-  new_text = "![](/img/#{@filename} \"#{@filename}\")"
-  @content = "#{@content}\n\n#{new_text}"
   erb :index
 end
 	
